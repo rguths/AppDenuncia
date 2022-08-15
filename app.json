@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "AppDenuncia",
+    "slug": "AppDenuncia",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationUsageDescription": "Esse aplicativo utiliza a localização para guardar o local das denúncias."
+      }
+    },
+    "android": {  
+      "permissions": [ "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"]
+    },
+    "web": {
+      "favicon": "./assets/images/favicon.png"
+    }
+  }
+}
