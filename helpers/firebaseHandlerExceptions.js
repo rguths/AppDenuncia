@@ -7,6 +7,8 @@ export function handleFirebaseError(err) {
     errorMessage = "O email informado já está registrado."
   }else if (errorCode == "auth/invalid-password") {
     errorMessage = "A senha informada é inválida."
+  }else if (errorCode == "auth/user-not-found") {
+    errorMessage = "O email informado não está registrado."
   }
 
   alertMessage("Ops", errorMessage)
