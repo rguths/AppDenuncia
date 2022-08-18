@@ -103,6 +103,20 @@ export default function UserScreen() {
         </View>
 
         <View style={[main.card, {marginTop: 20, paddingTop: 24, justifyContent: 'flex-start', alignItems: 'flex-start'}]}>
+          <Text style={{color: "#000", fontSize: 16, textAlign: 'left'}}>Sexo da pessoa</Text>
+          <DropDownPicker style={{
+            width: '100%', alignContent: 'center', borderRadius: 0, borderColor: 'transparent'
+            }}
+            open={open}
+            value={sexo}
+            items={items}
+            setOpen={setOpen}
+            setValue={setSexo}
+            setItems={setItems}
+          />
+        </View>
+
+        <View style={[main.card, {marginTop: 20, paddingTop: 24, justifyContent: 'flex-start', alignItems: 'flex-start'}]}>
           <Text style={{color: "#000", fontSize: 16, textAlign: 'left'}}>Peso aproximado (kg)</Text>
           <View style={{marginTop: 15, backgroundColor: 'transparent'}}>
             <NumericInput
@@ -122,19 +136,7 @@ export default function UserScreen() {
           
         </View>
 
-        <View style={[main.card, {marginTop: 20, paddingTop: 24, justifyContent: 'flex-start', alignItems: 'flex-start'}]}>
-          <Text style={{color: "#000", fontSize: 16, textAlign: 'left'}}>Sexo da pessoa</Text>
-          <DropDownPicker style={{
-            width: '100%', alignContent: 'center', borderRadius: 0, borderColor: 'transparent'
-            }}
-            open={open}
-            value={sexo}
-            items={items}
-            setOpen={setOpen}
-            setValue={setSexo}
-            setItems={setItems}
-          />
-        </View>
+        
 
         <TouchableOpacity style={[main.buttonSignOut, {}]} onPress={send}>
           <Text style={main.buttonText}>Enviar</Text>
