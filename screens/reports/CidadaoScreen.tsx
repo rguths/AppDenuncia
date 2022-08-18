@@ -135,10 +135,16 @@ export default function UserScreen() {
             setItems={setItems}
           />
         </View>
-
-        <TouchableOpacity style={[main.buttonSignOut, {}]} onPress={send}>
-          <Text style={main.buttonText}>Enviar</Text>
-        </TouchableOpacity >
+        
+        <View style={{marginTop: '30%', width: '100%'}}>
+          <View style={main.centered}>
+            <TouchableOpacity style={[main.buttonSignOut, {}]} onPress={send}>
+              <Text style={main.buttonText}>Enviar</Text>
+            </TouchableOpacity >
+          </View>
+          
+        </View>
+        
 
 
     </View>
