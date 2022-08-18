@@ -14,7 +14,10 @@ import { auth, db } from '../../config/firebase';
 import { collection, addDoc, GeoPoint, Timestamp } from "firebase/firestore";
 import * as Location from 'expo-location';
 
-import { textValidator } from '../../helpers/textValidator';
+
+//helpers
+import { alertMessage } from 'helpers/alertMessage';
+import { textValidator } from 'helpers/textValidator';
 
 export default function UserScreen() {
   const navigation = useNavigation();
@@ -47,9 +50,7 @@ export default function UserScreen() {
   async function send(){
     let descError = textValidator(description.value);
     if(descError){
-      Alert.alert('Ops!', descError, [
-        { text: 'OK'},
-      ]);
+      alertMessage('Ops!', descError)
       return;
     }
 
@@ -74,9 +75,7 @@ export default function UserScreen() {
     addDoc(dbRef, data)
       .then(async () => {
           console.log("Document has been added successfully");
-          await Alert.alert('Sucesso!', "Sua ocorrência foi enviada com sucesso!", [
-            { text: 'OK'},
-          ]);
+          alertMessage('Sucesso!', "Sua ocorrência foi enviada com sucesso!");
           navigation.navigate('Root', {name: 'UserScreen'})
       })
       .catch(error => {

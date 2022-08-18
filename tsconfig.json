@@ -10,7 +10,13 @@
     "noEmit": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "strict": true
+    "strict": true,
+    "paths": {
+      "helpers/*": ["helpers/*"],
+      "hook/*": ["hook/*"],
+      "assets/*": ["assets/*"],
+      "navigation/*": ["navigation/*"]
+    }
   },
   "extends": "expo/tsconfig.base"
 }

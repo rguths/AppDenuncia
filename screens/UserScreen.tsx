@@ -1,19 +1,31 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
+import {Image, Pressable, Alert } from 'react-native';
 
+//components
 import { Text, View } from '../components/Themed';
+
+// styles
 import main from '../styles/main';
 
-import {Image, Pressable, Alert } from 'react-native';
+// expo libraries
 import * as Permissions from 'expo-permissions';
 
-import { auth, db } from '../config/firebase';
+//firebase
 import { collection, query, where, getDocs, onSnapshot} from "firebase/firestore";
 
-import plus from '../assets/plus.png';
-import user from '../assets/user.png';
-import exclamation from '../assets/exclamation2.png'; 
-import logouticon from '../assets/logout.png';
+//config
+import { auth, db } from '../config/firebase';
+
+//helpers
+import { alertMessage } from 'helpers/alertMessage';
+import { handleFirebaseError } from 'helpers/firebaseHandlerExceptions';
+
+//assets
+import plus from 'assets/plus.png';
+import user from 'assets/user.png';
+import exclamation from 'assets/exclamation2.png'; 
+import logouticon from 'assets/logout.png';
 
 export default function UserScreen() {
   const navigation = useNavigation();
@@ -36,7 +48,7 @@ export default function UserScreen() {
     setDenuncias(docs.size);
     
     onSnapshot(q, querySnapshot => {
-      //setDenuncias(querySnapshot.size);
+      setDenuncias(querySnapshot.size);
     }, err => {
       console.log(`Encountered error: ${err}`);
     });
@@ -55,11 +67,9 @@ export default function UserScreen() {
   async function openReport(){
     const { status } = await Permissions.askAsync(Permissions.LOCATION_FOREGROUND);
     if (status !== "granted") {
-      Alert.alert(
+      alertMessage(
         "Permissão insuficiente",
-        "Desculpa, nós precisamos da permissão de Localização para isso funcionar",
-        [{ text: "Ok" }]
-      );
+        "Desculpa, nós precisamos da permissão de Localização para isso funcionar");
       return;
     }
     navigation.navigate('Root', { screen: 'ReportScreen' })

@@ -1,24 +1,34 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
+import {Image, TextInput, TouchableOpacity} from 'react-native';
+import { useEffect } from 'react';
+
+// expo & libraries
 import {SimpleLineIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import {Image, TextInput, Alert, TouchableOpacity} from 'react-native';
+import { Foundation } from '@expo/vector-icons'; 
+
+//components
 import { Text, View ,} from '../components/Themed';
 import MenuIcon from '../components/MenuIcon';
-import { useEffect } from 'react';
+
 import main from '../styles/main';
 
-import logo from '../assets/capivara.png';
-import background from '../assets/cpan.jpg';
+//assets
+import logo from 'assets/capivara.png';
+import background from 'assets/cpan.jpg';
 
+//firebase
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import {db, app} from '../config/firebase'
 
-import { Foundation } from '@expo/vector-icons'; 
-import { emailValidator } from '../helpers/emailValidator'
-import { passwordValidator } from '../helpers/passwordValidator'
-import { nameValidator } from '../helpers/nameValidator'
+//helpers
+import { emailValidator } from 'helpers/emailValidator'
+import { passwordValidator } from 'helpers/passwordValidator'
+import { nameValidator } from 'helpers/nameValidator'
+import { handleFirebaseError } from 'helpers/firebaseHandlerExceptions';
+import { alertMessage } from 'helpers/alertMessage';
 
 export default function RegisterScreen() {
   const navigation = useNavigation();
@@ -40,21 +50,15 @@ export default function RegisterScreen() {
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
     if(emailError){
-      Alert.alert('Ops!', emailError, [
-        { text: 'OK', onPress: () => console.log('OK Pressed') },
-      ]);
+      alertMessage('Ops!', emailError);
       return;
     }
     if(nameError){
-      Alert.alert('Ops!', nameError, [
-        { text: 'OK', onPress: () => console.log('OK Pressed') },
-      ]);
+      alertMessage('Ops!', nameError);
       return;
     }
     if(passwordError){
-      Alert.alert('Ops!', passwordError, [
-        { text: 'OK', onPress: () => console.log('OK Pressed') },
-      ]);
+      alertMessage('Ops!', passwordError);
       return;
     }
     const auth = getAuth();
@@ -65,21 +69,7 @@ export default function RegisterScreen() {
         
      })
     .catch(error => {
-        const errorCode = error.code.toString();
-        if(errorCode.includes('auth/email-already-exists')){
-          Alert.alert('Ops!', "Esse email já está em uso", [
-            { text: 'OK'},
-          ]);
-        }else if(errorCode.includes('auth/invalid-email')){
-          Alert.alert('Ops!', "Endereço de email inválido", [
-            { text: 'OK'},
-          ]);
-        }else{
-          Alert.alert('Ops!', error.message, [
-            { text: 'OK'},
-          ]);
-        
-        }
+        handleFirebaseError(error)
     });
   }
 

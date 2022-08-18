@@ -2,21 +2,24 @@ import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 import {SimpleLineIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import {Image, TextInput, Alert, TouchableOpacity} from 'react-native';
+import {Image, TextInput, TouchableOpacity} from 'react-native';
 import { Text, View ,} from '../components/Themed';
 import MenuIcon from '../components/MenuIcon';
 import { useEffect } from 'react';
 import main from '../styles/main';
 
-import logo from '../assets/capivara.png'; 
-import anonimo from '../assets/anonimo.png';
-import google from '../assets/google.png';
-import background from '../assets/cpan.jpg';
+import logo from 'assets/capivara.png'; 
+import anonimo from 'assets/anonimo.png';
+import google from 'assets/google.png';
+import background from 'assets/cpan.jpg';
 
 import { getAuth, signInAnonymously, signInWithEmailAndPassword  } from "firebase/auth";
 
-import { emailValidator } from '../helpers/emailValidator'
-import { passwordValidator } from '../helpers/passwordValidator'
+//helpers
+import { alertMessage } from 'helpers/alertMessage';
+import { emailValidator } from 'helpers/emailValidator'
+import { passwordValidator } from 'helpers/passwordValidator'
+import { handleFirebaseError } from 'helpers/firebaseHandlerExceptions';
 
 import { auth } from '../config/firebase';
 
@@ -26,8 +29,8 @@ export default function LoginScreen() {
   const [email, setEmail] = React.useState({ value: '', error: '' })
   const [password, setPassword] = React.useState({ value: '', error: '' })
 
-  auth.onAuthStateChanged(() => {
-    if(auth.currentUser){
+  auth.onAuthStateChanged(() => { // evento quando logar/desligar
+    if(auth.currentUser){ // verifica se foi feito login
       navigation.navigate('Root', { screen: 'UserScreen' })
     }
   })
@@ -46,9 +49,7 @@ export default function LoginScreen() {
         navigation.navigate('Root', { screen: 'UserScreen' })
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ...
+        handleFirebaseError(error)
       });
   }
 
@@ -56,15 +57,11 @@ export default function LoginScreen() {
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
     if(emailError){
-      Alert.alert('Ops!', emailError, [
-        { text: 'OK', onPress: () => console.log('OK Pressed') },
-      ]);
+      alertMessage('Ops!', emailError);
       return;
     }
     if(passwordError){
-      Alert.alert('Ops!', passwordError, [
-        { text: 'OK', onPress: () => console.log('OK Pressed') },
-      ]);
+      alertMessage('Ops!', passwordError);
       return;
     }
     const auth = getAuth();
@@ -75,11 +72,7 @@ export default function LoginScreen() {
         navigation.navigate('Root', { screen: 'UserScreen' })
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        Alert.alert('Ops!', errorMessage, [
-          { text: 'OK'},
-        ]);
+        handleFirebaseError(error)
       });
   }
 
