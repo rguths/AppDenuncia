@@ -18,6 +18,7 @@ import * as Location from 'expo-location';
 //helpers
 import { alertMessage } from 'helpers/alertMessage';
 import { textValidator } from 'helpers/textValidator';
+import { findLocation } from 'helpers/locationHelper';
 
 export default function UserScreen() {
   const navigation = useNavigation();
@@ -54,7 +55,7 @@ export default function UserScreen() {
       return;
     }
 
-    let location = await Location.getCurrentPositionAsync({});
+    let location = await findLocation();
     let data = {
       'codigo_usuario': auth.currentUser?.uid, // chave secundaria do usuario
       'data': Timestamp.fromDate(new Date()), // data e hora

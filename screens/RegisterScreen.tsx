@@ -15,7 +15,7 @@ import MenuIcon from '../components/MenuIcon';
 import main from '../styles/main';
 
 //assets
-import logo from 'assets/capivara.png';
+import logo from 'assets/images/capivara.png';
 import background from 'assets/cpan.jpg';
 
 //firebase
@@ -76,7 +76,7 @@ export default function RegisterScreen() {
   return (
     
     <View style={main.centered}>
-      <Image source={background} style={{height: '40%', borderRadius: 20, top: 0, width: '100%', position: 'absolute'}}/>
+      <Image source={background} style={{height: '40%', borderBottomLeftRadius: 20, borderBottomRightRadius: 20, top: 0, width: '100%', position: 'absolute'}}/>
       <Image source={logo} style={{marginBottom: 2}}/>
       
       <View style={main.card}>

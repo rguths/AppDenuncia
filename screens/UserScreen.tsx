@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import {Image, Pressable, Alert } from 'react-native';
+import {Image, Pressable } from 'react-native';
 
 //components
 import { Text, View } from '../components/Themed';
@@ -9,7 +9,7 @@ import { Text, View } from '../components/Themed';
 import main from '../styles/main';
 
 // expo libraries
-import * as Permissions from 'expo-permissions';
+import * as Location from 'expo-location';
 
 //firebase
 import { collection, query, where, getDocs, onSnapshot} from "firebase/firestore";
@@ -19,13 +19,13 @@ import { auth, db } from '../config/firebase';
 
 //helpers
 import { alertMessage } from 'helpers/alertMessage';
-import { handleFirebaseError } from 'helpers/firebaseHandlerExceptions';
+import { findLocation } from 'helpers/locationHelper';
 
 //assets
-import plus from 'assets/plus.png';
-import user from 'assets/user.png';
-import exclamation from 'assets/exclamation2.png'; 
-import logouticon from 'assets/logout.png';
+import plus from 'assets/images/plus.png';
+import user from 'assets/images/user.png';
+import exclamation from 'assets/images/exclamation2.png'; 
+import logouticon from 'assets/images/logout.png';
 
 export default function UserScreen() {
   const navigation = useNavigation();
@@ -42,7 +42,8 @@ export default function UserScreen() {
   });
 
 
-  const fetchDenuncias=async()=>{
+  const fetchDenuncias = async() =>{
+
     const q = query(collection(db, "denuncias"), where("codigo_usuario", "==", auth.currentUser?.uid));
     var docs = await getDocs(q);
     setDenuncias(docs.size);
@@ -65,8 +66,8 @@ export default function UserScreen() {
   }
 
   async function openReport(){
-    const { status } = await Permissions.askAsync(Permissions.LOCATION_FOREGROUND);
-    if (status !== "granted") {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
       alertMessage(
         "Permissão insuficiente",
         "Desculpa, nós precisamos da permissão de Localização para isso funcionar");

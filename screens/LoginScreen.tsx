@@ -8,9 +8,9 @@ import MenuIcon from '../components/MenuIcon';
 import { useEffect } from 'react';
 import main from '../styles/main';
 
-import logo from 'assets/capivara.png'; 
-import anonimo from 'assets/anonimo.png';
-import google from 'assets/google.png';
+import logo from 'assets/images/capivara.png'; 
+import anonimo from 'assets/images/anonimo.png';
+import google from 'assets/images/google.png';
 import background from 'assets/cpan.jpg';
 
 import { getAuth, signInAnonymously, signInWithEmailAndPassword  } from "firebase/auth";
@@ -79,7 +79,7 @@ export default function LoginScreen() {
   return (
     
     <View style={main.centered}>
-      <Image source={background} style={{height: '40%', borderRadius: 20, top: 0, width: '100%', position: 'absolute'}}/>
+      <Image source={background} style={{height: '40%', borderBottomLeftRadius: 20, borderBottomRightRadius: 20, top: 0, width: '100%', position: 'absolute'}}/>
       <Image source={logo} style={{marginBottom: 2}}/>
       
       <View style={main.card}>
