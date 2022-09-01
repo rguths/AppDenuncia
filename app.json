@@ -24,8 +24,13 @@
         "NSLocationUsageDescription": "Esse aplicativo utiliza a localização para guardar o local das denúncias."
       }
     },
-    "android": {  
-      "permissions": [ "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"]
+    "android": {
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ],
+      "package": "Coleta.apk",
+      "versionCode": 9
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

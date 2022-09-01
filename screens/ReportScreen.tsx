@@ -17,7 +17,7 @@ export default function UserScreen() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(0);
   const [items, setItems] = React.useState([
-    {label: 'Cidadão adulterado', value: 1},
+    {label: 'Coleta realizada', value: 1},
     {label: 'Proliferação da Dengue', value: 2},
     {label: 'Buraco na via', value: 3},
   ]);

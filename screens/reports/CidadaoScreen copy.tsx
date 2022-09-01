@@ -29,13 +29,10 @@ export default function UserScreen() {
 
   //combobox
   const [open, setOpen] = React.useState(false);
-  const [sexo, setSexo] = React.useState('7');
+  const [sexo, setSexo] = React.useState('M');
   const [items, setItems] = React.useState([
-    {label: '3', value: '3'},
-    {label: '7', value: '7'},
-    {label: '10', value: '10'},
-    {label: '14', value: '14'},
-    {label: '30', value: '30'}
+    {label: 'Masculino', value: 'M'},
+    {label: 'Feminino', value: 'F'}
   ]);
 
   //peso
@@ -52,11 +49,11 @@ export default function UserScreen() {
   });
 
   async function send(){
-    /*let descError = textValidator(description.value);
+    let descError = textValidator(description.value);
     if(descError){
       alertMessage('Ops!', descError)
       return;
-    }*/
+    }
 
     let location = await findLocation();
     let data = {
@@ -80,7 +77,7 @@ export default function UserScreen() {
       .then(async () => {
           console.log("Document has been added successfully");
           alertMessage('Sucesso!', "Sua coleta foi enviada com sucesso!");
-          navigation.navigate('Root', {name: 'ReportScreen'})
+          navigation.navigate('Root', {name: 'UserScreen'})
       })
       .catch(error => {
           console.log(error);
@@ -93,7 +90,18 @@ export default function UserScreen() {
   return (
     
     <View style={main.centered} >
-       
+        <View style={[main.card, {marginTop: 20, paddingTop: 24, justifyContent: 'flex-start', alignItems: 'flex-start'}]}>
+          <Text style={{color: "#000", fontSize: 16, textAlign: 'left'}}>Descreva a situação da pessoa</Text>
+          <TextInput style={[main.richinput, {height: Math.max(35, height)}]} value={description.value}
+                onChangeText={(text) => {
+                  setDescription({ value: text, error: '' })
+                }}
+                onContentSizeChange={(e) => setHeight(e.nativeEvent.contentSize.height)}
+                autoCapitalize="words"
+                textContentType="name"
+                multiline={true}
+                keyboardType="default" placeholder="O cidadão está embriagado e incomodando outros moradores." />
+        </View>
 
         <View style={[main.card, {marginTop: 20, paddingTop: 24, justifyContent: 'flex-start', alignItems: 'flex-start'}]}>
           <Text style={{color: "#000", fontSize: 16, textAlign: 'left'}}>Quantos litros coletou</Text>
@@ -116,20 +124,7 @@ export default function UserScreen() {
         </View>
 
         <View style={[main.card, {marginTop: 20, paddingTop: 24, justifyContent: 'flex-start', alignItems: 'flex-start'}]}>
-          <Text style={{color: "#000", fontSize: 16, textAlign: 'left'}}>Alguma observação...</Text>
-          <TextInput style={[main.richinput, {height: Math.max(35, height)}]} value={description.value}
-                onChangeText={(text) => {
-                  setDescription({ value: text, error: '' })
-                }}
-                onContentSizeChange={(e) => setHeight(e.nativeEvent.contentSize.height)}
-                autoCapitalize="words"
-                textContentType="name"
-                multiline={true}
-                keyboardType="default" placeholder="Quen ne recebeu foi o Antonio." />
-        </View>
-
-        <View style={[main.card, {marginTop: 20, paddingTop: 24, justifyContent: 'flex-start', alignItems: 'flex-start'}]}>
-          <Text style={{color: "#000", fontSize: 16, textAlign: 'left'}}>Retornar em...</Text>
+          <Text style={{color: "#000", fontSize: 16, textAlign: 'left'}}>Sexo da pessoa</Text>
           <DropDownPicker style={{
             width: '100%', alignContent: 'center', borderRadius: 0, borderColor: 'transparent'
             }}
@@ -142,7 +137,6 @@ export default function UserScreen() {
           />
         </View>
         
-  
         <View style={{marginTop: '30%', width: '100%'}}>
           <View style={main.centered}>
             <TouchableOpacity style={[main.buttonSignOut, {}]} onPress={send}>
